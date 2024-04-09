@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const basicAuth = require('express-basic-auth');
+// const basicAuth = require('express-basic-auth');
+const bearerAuth = require('express-bearer-token'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,12 +10,14 @@ const users = { 'user': 'password' };
 
 app.use(bodyParser.json());
 
-app.use(basicAuth({
-    users: users,
-    unauthorizedResponse: (req) => {
-        return 'Acesso negado.';
-    }
-}));
+app.use(bearerAuth('tokenBearer'))
+
+// app.use(basicAuth({
+//     users: users,
+//     unauthorizedResponse: (req) => {
+//         return 'Acesso negado.';
+//     }
+// }));
 
 let livros = [
     { id: 1, titulo: 'Livro 1', autor: 'Autor 1' },
