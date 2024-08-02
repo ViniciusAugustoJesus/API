@@ -50,6 +50,19 @@ app.post('/livros', (req, res) => {
     res.status(201).json({ id, titulo, autor });
 });
 
+app.delete('/deleteLivro/:id', (req, res) => {
+
+    const id = parseInt(req.params.id, 10);
+    const index = items.findIndex(item => item.id === id)
+
+    if (index !== -1) {
+        items.splice(index, 1);
+        res.status(200).send(`Item com id ${id} foi deletado.`);
+    } else {
+        res.status(404).send('Item não encontrado.');
+    }
+})
+
 
 app.listen(PORT, () => {
     console.log(`Servidor rodando em http://localhost:${PORT}`);
